@@ -37,7 +37,6 @@ public class TimeAList {
         parameters.addLast(32000);
         parameters.addLast(64000);
         parameters.addLast(128000);
-        parameters.addLast(10000000);
         while(parametersLength < parameters.size()){
             AList<Integer> operations = new AList<>();
             Stopwatch count = new Stopwatch();
