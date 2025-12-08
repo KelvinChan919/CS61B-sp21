@@ -47,5 +47,37 @@ public class ArrayDeque<T>{
         }
         System.out.println(" ");
     }
+    public T removeFirst(){
+        int prevFirst = nextFirst + 1;
+        if(prevFirst == items.length){
+            prevFirst = 0;
+        }
+        if(items[prevFirst] == null){
+            return null;
+        }
+        T toBeRemoved = items[prevFirst];
+        items[prevFirst] = null;
+        nextFirst += 1;
+        if(nextFirst == items.length){
+            nextFirst = 0;
+        }
+        return toBeRemoved;
+    }
+    public T removeLast(){
+        int prevLast = nextLast - 1;
+        if(prevLast == -1){
+            prevLast = items.length - 1;
+        }
+        if (items[prevLast] == null){
+            return null;
+        }
+        T toBeRemoved = items[prevLast];
+        items[prevLast] = null;
+        nextLast -= 1;
+        if(nextLast == -1){
+            nextLast = items.length - 1;
+        }
+        return toBeRemoved;
+    }
 
 }
