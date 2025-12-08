@@ -39,7 +39,21 @@ public class ArrayDeque<T>{
         return size;
     }
     public T get(int index){
-        return items[index];
+        if(index > size - 1 && index < 0){
+            return null;
+        }
+        int First = nextFirst + 1;
+        if(First == items.length){
+            First = 0;
+        }
+        int actualLocation = First + index;
+        if(actualLocation >= items.length){
+            System.out.println("index" + " " + index + " is " + items[actualLocation - items.length]);
+            return items[actualLocation - items.length];
+        }else{
+            System.out.println("index" + " " + index + " is " + items[actualLocation]);
+            return items[actualLocation];
+        }
     }
     public void printDeque(){
         for(int i = 0; i < items.length; i++){
@@ -61,6 +75,7 @@ public class ArrayDeque<T>{
         if(nextFirst == items.length){
             nextFirst = 0;
         }
+        size -= 1;
         return toBeRemoved;
     }
     public T removeLast(){
@@ -77,6 +92,7 @@ public class ArrayDeque<T>{
         if(nextLast == -1){
             nextLast = items.length - 1;
         }
+        size -= 1;
         return toBeRemoved;
     }
 
