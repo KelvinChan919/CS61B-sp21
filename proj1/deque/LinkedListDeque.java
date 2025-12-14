@@ -1,7 +1,10 @@
 package deque;
 
 
-public class LinkedListDeque<T>{
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class LinkedListDeque<T> implements Deque<T>{
     public class LinkedList{
         public LinkedList prev;
         public T item;
@@ -20,14 +23,6 @@ public class LinkedListDeque<T>{
         sentinel = new LinkedList(null,null,null);
         size = 0;
     }
-    public boolean isEmpty(){
-        if(sentinel.next == null){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public LinkedListDeque(T arg){
         sentinel = new LinkedList(null,arg,null);
         sentinel.next = new LinkedList(sentinel,arg,null);
@@ -138,5 +133,43 @@ public class LinkedListDeque<T>{
             }
             return recursionHelper(pointer.next, currentIndex+1, targetIndex);
         }
+    }
+    public Iterator<T> iterator(){
+        return new linkedListDequeIterator();
+    }
+    private class linkedListDequeIterator implements Iterator<T>{
+        int count;
+        public linkedListDequeIterator(){
+            count = 0;
+        }
+        public boolean hasNext(){
+            return count < size;
+        }
+        public T next(){
+            T toBeReturnedValue = get(count);
+            count += 1;
+            return toBeReturnedValue;
+        }
+    }
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if(o instanceof LinkedListDeque){
+            LinkedListDeque oLinkedListDeque = (LinkedListDeque) o;
+            if(this.size != oLinkedListDeque.size){
+                return false;
+            }
+            Iterator<T> thisListIterator = this.iterator();
+            Iterator<T> oListIterator = oLinkedListDeque.iterator();
+            while(thisListIterator.hasNext()){
+                T thisListElement = thisListIterator.next();
+                if(!thisListElement.equals(oListIterator.next())){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

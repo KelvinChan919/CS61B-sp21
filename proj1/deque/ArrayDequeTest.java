@@ -6,24 +6,46 @@ import static org.junit.Assert.*;
 public class ArrayDequeTest {
     @Test
     public void ArrayTest(){
-        ArrayDeque<Integer> arr = new ArrayDeque<Integer>();
-        arr.addFirst(1);
-        arr.addFirst(2);
-        arr.addFirst(3);
-        arr.addLast(4);
-        arr.addLast(5);
-        arr.addFirst(6);
-        arr.addFirst(7);
-        arr.addFirst(8);
+        ArrayDeque<String> arr = new ArrayDeque<String>();
+        arr.addLast("a");
+        arr.addLast("b");
+        arr.addFirst("c");
+        arr.addLast("d");
+        arr.addLast("e");
+        arr.addFirst("f");
+        arr.addLast("g");
+        arr.addLast("h");
+        arr.addLast("a");
+        arr.addLast("b");
+        arr.addFirst("c");
+        arr.addLast("d");
+        arr.addLast("e");
+        arr.addFirst("f");
+        arr.addLast("g");
+        arr.addLast("h");
+        arr.addLast("a");
+        arr.addLast("b");
+        arr.addFirst("c");
+        arr.addLast("d");
+        arr.addLast("e");
+        arr.addFirst("f");
+        arr.addLast("g");
+        arr.addLast("h");
+        arr.addLast("a");
+        arr.addLast("b");
+        arr.addFirst("c");
+        arr.addLast("d");
+        arr.addLast("e");
+        arr.addFirst("f");
+        arr.addLast("g");
+        arr.addLast("h");
+        arr.addLast("h");
+        for(int i = 0; i < 17; i++){
+            arr.removeFirst();
+        }
         arr.removeLast();
-        arr.removeLast();
-        arr.removeLast();
-        arr.removeLast();
-        arr.removeLast();
-        arr.removeFirst();
-        arr.removeFirst();
-        System.out.println(arr.nextFirst);
-        arr.removeFirst();
+        System.out.println("size is " + arr.size);
+        arr.printDequeOfItems();
         arr.printDeque();
     }
 }
