@@ -14,7 +14,7 @@ public class IteratorTest {
         newList.addFirst("a");
         newList.addFirst("ayuty4");
         newList.addFirst("as");
-        newList.addFirst("c");
+        newList.addFirst("a");
         System.out.println(arr.equals(newList));
     }
 
