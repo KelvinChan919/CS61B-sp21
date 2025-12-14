@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int nextFirst;
@@ -49,10 +49,8 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         int actualLocation = first + index;
         if (actualLocation >= items.length) {
-            System.out.println("index" + " " + index + " is " + items[actualLocation - items.length]);
             return items[actualLocation - items.length];
         } else {
-            System.out.println("index" + " " + index + " is " + items[actualLocation]);
             return items[actualLocation];
         }
     }
@@ -144,20 +142,13 @@ public class ArrayDeque<T> implements Deque<T> {
     }
     private boolean sizeDownDeterminant() {
         double usageRatio = (double) (size - 1) / items.length;
-        if (items.length >= 16 && usageRatio < 0.25) {
-            return true;
-        } else {
-            return false;
-        }
+        return (items.length >= 16 && usageRatio < 0.25);
     }
-    public Iterator<T> iterator() {
-        return new Iterable();
+        public Iterator<T> iterator() {
+        return new ArrayIterator();
     }
-    private class Iterable<T> implements Iterator<T> {
+    private class ArrayIterator<T> implements Iterator<T> {
         int count = 0;
-//        private ArrayDequeIterator(){
-//            count = 0;
-//        }
         public boolean hasNext() {
             return count < size;
         }
@@ -171,13 +162,13 @@ public class ArrayDeque<T> implements Deque<T> {
         if (o == this) {
             return true;
         }
-        if (o instanceof ArrayDeque) {
-            ArrayDeque oArrayDeque = (ArrayDeque) o;
-            if (this.size != oArrayDeque.size) {
+        if (o instanceof Deque) {
+            Deque oDeque = (Deque) o;
+            if (this.size != oDeque.size()) {
                 return false;
             }
             Iterator<T> thisArrayIterator = this.iterator();
-            Iterator<T> oArratIterator = oArrayDeque.iterator();
+            Iterator<T> oArratIterator = oDeque.iterator();
             while (thisArrayIterator.hasNext()) {
                 T thisArrayElement = thisArrayIterator.next();
                 T oArrayElement = oArratIterator.next();

@@ -3,8 +3,8 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T> {
-    public class LinkedList {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
+    private class LinkedList {
         private LinkedList prev;
         private T item;
         private LinkedList next;
@@ -131,10 +131,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return new Iterable();
     }
     private class Iterable<T> implements Iterator<T> {
-        int count;
-        public Iterable() {
-            count = 0;
-        }
+        int count = 0;
         public boolean hasNext() {
             return count < size;
         }
@@ -148,13 +145,13 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (o == this) {
             return true;
         }
-        if (o instanceof LinkedListDeque) {
-            LinkedListDeque oLinkedListDeque = (LinkedListDeque) o;
-            if(this.size != oLinkedListDeque.size){
+        if (o instanceof Deque) {
+            Deque oDeque = (Deque) o;
+            if (this.size != oDeque.size()) {
                 return false;
             }
             Iterator<T> thisListIterator = this.iterator();
-            Iterator<T> oListIterator = oLinkedListDeque.iterator();
+            Iterator<T> oListIterator = oDeque.iterator();
             while (thisListIterator.hasNext()) {
                 T thisListElement = thisListIterator.next();
                 T oListElement = oListIterator.next();
