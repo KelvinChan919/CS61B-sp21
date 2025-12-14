@@ -2,185 +2,186 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>{
-    public T[] items;
-    public int size;
-    public int nextFirst;
-    public int nextLast;
+public class ArrayDeque<T> implements Deque<T> {
+    private T[] items;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
         nextFirst = 4;
         nextLast = 5;
     }
-    public void addFirst(T item){
-        if(size+ 1 > items.length){
-            sizeUp(size*2);
+    public void addFirst(T item) {
+        if (size + 1 > items.length) {
+            sizeUp(size * 2);
         }
         items[nextFirst] = item;
         nextFirst -= 1;
-        if(nextFirst == -1){
+        if (nextFirst == -1) {
             nextFirst = items.length - 1;
         }
         size += 1;
     }
-    public void addLast(T item){
-        if(size+ 1 > items.length){
-            sizeUp(size*2);
+    public void addLast(T item) {
+        if (size + 1 > items.length) {
+            sizeUp(size * 2);
         }
         items[nextLast] = item;
         nextLast += 1;
-        if(nextLast == items.length){
+        if (nextLast == items.length) {
             nextLast = 0;
         }
         size += 1;
     }
-    public int size(){
+    public int size() {
         return size;
     }
-    public T get(int index){
-        if(index > size - 1 && index < 0){
+    public T get(int index) {
+        if (index > size - 1 && index < 0) {
             return null;
         }
-        int First = nextFirst + 1;
-        if(First == items.length){
-            First = 0;
+        int first = nextFirst + 1;
+        if (first == items.length) {
+            first = 0;
         }
-        int actualLocation = First + index;
-        if(actualLocation >= items.length){
+        int actualLocation = first + index;
+        if (actualLocation >= items.length) {
             System.out.println("index" + " " + index + " is " + items[actualLocation - items.length]);
             return items[actualLocation - items.length];
-        }else{
+        } else {
             System.out.println("index" + " " + index + " is " + items[actualLocation]);
             return items[actualLocation];
         }
     }
-    public void printDequeOfItems(){
-        for(int i = 0; i < items.length; i++){
+    private void printDequeOfItems() {
+        for (int i = 0; i < items.length; i++) {
             System.out.println(items[i]);
         }
         System.out.println(" ");
         System.out.println("Length is " + items.length);
     }
-    public void printDeque(){
-        int First = nextFirst + 1;
-        for(int i = 0; i < size; i++){
-            if(First == items.length){
-                First = 0;
+    public void printDeque() {
+        int first = nextFirst + 1;
+        for (int i = 0; i < size; i++) {
+            if (first == items.length) {
+                first = 0;
             }
-            System.out.println(items[First]);
-            First += 1;
+            System.out.println(items[first]);
+            first += 1;
         }
         System.out.println(" ");
     }
-    public T removeFirst(){
-        if(sizeDownDeterminant()){
+    public T removeFirst() {
+        if (sizeDownDeterminant()) {
             sizeDown();
         }
         int prevFirst = nextFirst + 1;
-        if(prevFirst == items.length){
+        if (prevFirst == items.length) {
             prevFirst = 0;
         }
-        if(items[prevFirst] == null){
+        if (items[prevFirst] == null) {
             return null;
         }
         T toBeRemoved = items[prevFirst];
         items[prevFirst] = null;
         nextFirst += 1;
-        if(nextFirst == items.length){
+        if (nextFirst == items.length) {
             nextFirst = 0;
         }
         size -= 1;
         return toBeRemoved;
     }
-    public T removeLast(){
-        if(sizeDownDeterminant()){
+    public T removeLast() {
+        if (sizeDownDeterminant()) {
             sizeDown();
         }
         int prevLast = nextLast - 1;
-        if(prevLast == -1){
+        if (prevLast == -1) {
             prevLast = items.length - 1;
         }
-        if (items[prevLast] == null){
+        if (items[prevLast] == null) {
             return null;
         }
         T toBeRemoved = items[prevLast];
         items[prevLast] = null;
         nextLast -= 1;
-        if(nextLast == -1){
+        if (nextLast == -1) {
             nextLast = items.length - 1;
         }
         size -= 1;
         return toBeRemoved;
     }
-    public void sizeUp(int capacity){
+    private void sizeUp(int capacity) {
         T[] newItems = (T[]) new Object[capacity];
-        int First = nextFirst + 1;
-        for(int i = 0; i < size; i++){
-            if(First == items.length){
-                First = 0;
+        int first = nextFirst + 1;
+        for (int i = 0; i < size; i++) {
+            if (first == items.length) {
+                first = 0;
             }
-            newItems[i] = items[First];
-            First += 1;
+            newItems[i] = items[first];
+            first += 1;
         }
         nextFirst = newItems.length - 1;
         nextLast = items.length;
         items = newItems;
     }
-    public void sizeDown(){
-        T[] newItems = (T[]) new Object[items.length/2];
-        int First = nextFirst + 1;
-        for(int i = 0; i < size; i++){
-            if(First == items.length){
-                First = 0;
+    private void sizeDown() {
+        T[] newItems = (T[]) new Object[items.length / 2];
+        int first = nextFirst + 1;
+        for (int i = 0; i < size; i++) {
+            if (first == items.length) {
+                first = 0;
             }
-            newItems[i] = items[First];
-            First += 1;
+            newItems[i] = items[first];
+            first += 1;
         }
         nextFirst = newItems.length - 1;
         nextLast = size;
         items = newItems;
     }
-    public boolean sizeDownDeterminant(){
-        double usageRatio = (double) (size-1) / items.length;
-        if(items.length >= 16 && usageRatio < 0.25){
+    private boolean sizeDownDeterminant() {
+        double usageRatio = (double) (size - 1) / items.length;
+        if (items.length >= 16 && usageRatio < 0.25) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public Iterator<T> iterator(){
-        return new arrayDequeIterator();
+    public Iterator<T> iterator() {
+        return new Iterable();
     }
-    private class arrayDequeIterator implements Iterator<T>{
-        int count;
-        public arrayDequeIterator(){
-            count = 0;
-        }
-        public boolean hasNext(){
+    private class Iterable<T> implements Iterator<T> {
+        int count = 0;
+//        private ArrayDequeIterator(){
+//            count = 0;
+//        }
+        public boolean hasNext() {
             return count < size;
         }
-        public T next(){
-            T toBeReturnedValue = get(count);
+        public T next() {
+            T toBeReturnedValue = (T) get(count);
             count += 1;
             return toBeReturnedValue;
         }
     }
-    public boolean equals(Object o){
-        if(o == this){
+    public boolean equals(Object o) {
+        if (o == this) {
             return true;
         }
-        if(o instanceof ArrayDeque){
+        if (o instanceof ArrayDeque) {
             ArrayDeque oArrayDeque = (ArrayDeque) o;
-            if(this.size != oArrayDeque.size){
+            if (this.size != oArrayDeque.size) {
                 return false;
             }
             Iterator<T> thisArrayIterator = this.iterator();
             Iterator<T> oArratIterator = oArrayDeque.iterator();
-            while(thisArrayIterator.hasNext()){
+            while (thisArrayIterator.hasNext()) {
                 T thisArrayElement = thisArrayIterator.next();
-                if(!thisArrayElement.equals(oArratIterator.next())){
+                T oArrayElement = oArratIterator.next();
+                if (!thisArrayElement.equals(oArrayElement)) {
                     return false;
                 }
             }
