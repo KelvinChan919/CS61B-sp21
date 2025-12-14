@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class IteratorTest {
     @Test
-    public void Test(){
+    public void test() {
         ArrayDeque<String> arr = new ArrayDeque<String>();
         LinkedListDeque<String> newList = new LinkedListDeque<String>();
         arr.addFirst("a");

@@ -144,7 +144,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         double usageRatio = (double) (size - 1) / items.length;
         return (items.length >= 16 && usageRatio < 0.25);
     }
-        public Iterator<T> iterator() {
+    public Iterator<T> iterator() {
         return new ArrayIterator();
     }
     private class ArrayIterator<T> implements Iterator<T> {
@@ -163,12 +163,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return true;
         }
         if (o instanceof Deque) {
-            Deque oDeque = (Deque) o;
+            Deque<T> oDeque = (Deque<T>) o;
             if (this.size != oDeque.size()) {
                 return false;
             }
-            for(int i = 0; i < size(); i++){
-                if (get(i) != oDeque.get(i)) {
+            for (int i = 0; i < size(); i++) {
+                if (!get(i).equals(oDeque.get(i))) {
                     return false;
                 }
             }
